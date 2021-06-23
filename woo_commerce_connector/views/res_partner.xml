@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="action_woo_customer_menu" model="ir.actions.act_window">
+            <field name="name">Partners</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="domain">[('woo_id', '!=', False)]</field>
+            <field name="context">{'create': False, 'edit': True, 'delete': True}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_empty_folder">
+                    Woo-commerce Customers.
+                </p>
+            </field>
+        </record>
+
+        <record id="woo_customer_page_inherited" model="ir.ui.view">
+            <field name="name">res.partner.woo.page.inherited</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='internal_notes']" position="before">
+                    <page string="WooCommerce Info" name="wooinfo">
+                        <group string="Primary Details">
+                            <field name="woo_id"/>
+                            <field name="woo_user_name"/>
+                            <field name="instance_id"/>
+                        </group>
+                    </page>
+                </xpath>
+                <xpath expr="//field[@name='category_id']" position="after">
+                    <field name="date_created"/>
+                </xpath>
+            </field>
+        </record>
+
+
+        <menuitem id="woo_customer_submenu" name="Partners"
+                  parent="woo_commerce_menu"
+                  action="action_woo_customer_menu"
+                  groups="base.group_user"/>
+    </data>
+</odoo>

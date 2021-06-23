@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="product_tlc_form_view" model="ir.ui.view">
+            <field name="name">product.tlc.form</field>
+            <field name="model">product.tlc</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                        <notebook>
+                            <page string="WooCommerce Info" name="wooinfo">
+                                <group string="Primary Details">
+                                    <field name="woo_id"/>
+                                    <field name="instance_id"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_woo_tlc_menu" model="ir.actions.act_window">
+            <field name="name">TLC</field>
+            <field name="res_model">product.tlc</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('woo_id', '!=', False)]</field>
+            <field name="context">{'create': False, 'edit': True, 'delete': True}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_empty_folder">
+                    Woo-commerce TLC.
+                </p>
+            </field>
+        </record>
+
+        <record id="woo_product_tlc_page" model="ir.ui.view">
+            <field name="name">product.tlc.tree</field>
+            <field name="model">product.tlc</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <menuitem id="woo_tlc_submenu" name="Woocommerce TLC"
+                  parent="product_menu"
+                  action="action_woo_tlc_menu"
+                  groups="base.group_user"/>
+    </data>
+</odoo>

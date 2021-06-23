@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="product_brand_form_view" model="ir.ui.view">
+            <field name="name">product.brand.form</field>
+            <field name="model">product.brand</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="brand"/>
+                        </group>
+                        <notebook>
+                            <page string="WooCommerce Info" name="wooinfo">
+                                <group string="Woo Details">
+                                    <field name="woo_id"/>
+                                    <field name="instance_id"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_woo_brand_menu" model="ir.actions.act_window">
+            <field name="name">Brands</field>
+            <field name="res_model">product.brand</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('woo_id', '!=', False)]</field>
+            <field name="context">{'create': False, 'edit': True, 'delete': True}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_empty_folder">
+                    Woo-commerce Brands.
+                </p>
+            </field>
+        </record>
+
+        <record id="woo_product_brand_page" model="ir.ui.view">
+            <field name="name">product.brand.tree</field>
+            <field name="model">product.brand</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="brand"/>
+                </tree>
+            </field>
+        </record>
+
+        <menuitem id="woo_brand_submenu" name="Woocommerce Brands"
+                  parent="product_menu"
+                  action="action_woo_brand_menu"
+                  groups="base.group_user"/>
+    </data>
+</odoo>

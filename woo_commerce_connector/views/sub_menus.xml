@@ -1,0 +1,44 @@
+<odoo>
+    <data>
+
+        <record id="action_woo_coupon" model="ir.actions.act_window">
+            <field name="name">Coupon Programs</field>
+            <field name="res_model">coupon.coupon</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('woo_id', '!=', False)]</field>
+            <field name="context">{'create': False, 'edit': True, 'delete': True}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_empty_folder">
+                    Woo-commerce Coupons.
+                </p>
+            </field>
+        </record>
+
+        <record id="woo_coupon_page" model="ir.ui.view">
+            <field name="name">woo.coupon.page</field>
+            <field name="model">coupon.coupon</field>
+            <field name="inherit_id" ref="sale_coupon.sale_coupon_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='sales_order_id']" position="after">
+                    <field name="woo_id"/>
+                    <field name="instance_id"/>
+                </xpath>
+            </field>
+        </record>
+
+
+        <menuitem id="product_menu"
+                  name="Products"
+                  parent="config_menu"
+                  sequence="110"
+                  groups="base.group_user"/>
+
+
+        <menuitem id="coupon_submenu"
+                  name="Applied Coupons"
+                  action="action_woo_coupon"
+                  sequence="2"
+                  parent="product_menu"/>
+    </data>
+
+</odoo>

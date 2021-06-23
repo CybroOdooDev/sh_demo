@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="woo_wizard_form_view" model="ir.ui.view">
+            <field name="name">woo.wizard.form</field>
+            <field name="model">woo.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Instance" create="0">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group string="Instance Details">
+                                <field name="store_url"/>
+                                <field name="consumer_key" password="1"/>
+                                <field name="consumer_secret" password="1"/>
+                            </group>
+                            <group string="Currency Details">
+                                <field name="currency"/>
+                            </group>
+                            <group string="Import/Export">
+                                <field name="product_check" widget="boolean_toggle"/>
+                                <field name="customer_check" widget="boolean_toggle"/>
+                                <field name="order_check" widget="boolean_toggle"/>
+                                <field name="location_id" invisible="0"/>
+                            </group>
+                            <group string="Journal">
+                                <field name="journal"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <field name="order_check" widget="boolean_toggle" invisible="1"/>
+                        <button name="get_woo_import" type="object" string="Import" class="btn-info"/>
+                        <button name="get_woo_export" type="object" string="Export" class="btn-info"
+                                attrs="{'invisible': [('order_check','=', True)]}"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

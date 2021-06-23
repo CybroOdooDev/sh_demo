@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="product_subtype_form" model="ir.ui.view">
+            <field name="name">product.subtype.form</field>
+            <field name="model">product.subtype</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="subtype"/>
+                            <field name="slug"/>
+                        </group>
+                        <notebook>
+                            <page string="WooCommerce Info" name="wooinfo">
+                                <group string="Primary Details">
+                                    <field name="woo_id"/>
+                                    <field name="instance_id"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_woo_subtype_menu" model="ir.actions.act_window">
+            <field name="name">Subtypes</field>
+            <field name="res_model">product.subtype</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('woo_id', '!=', False)]</field>
+            <field name="context">{'create': False, 'edit': True, 'delete': True}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_empty_folder">
+                    Woo-commerce Subtypes.
+                </p>
+            </field>
+        </record>
+
+        <record id="woo_subtype_tree_view" model="ir.ui.view">
+            <field name="name">woo.product.subtype.tree</field>
+            <field name="model">product.subtype</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="subtype"/>
+                    <field name="slug"/>
+                </tree>
+            </field>
+        </record>
+
+        <menuitem id="woo_subtype_submenu" name="Woocommerce SubTypes"
+                  parent="product_menu"
+                  action="action_woo_subtype_menu"
+                  groups="base.group_user"/>
+    </data>
+</odoo>

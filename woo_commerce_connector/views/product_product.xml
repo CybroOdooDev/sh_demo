@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="action_woo_product_menu" model="ir.actions.act_window">
+            <field name="name">Products</field>
+            <field name="res_model">product.template</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="domain">[('woo_id', '!=', False)]</field>
+            <field name="context">{'create': True, 'edit': True, 'delete': True}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_empty_folder">
+                    Woo-commerce Products.
+                </p>
+            </field>
+        </record>
+
+        <record id="product_attr_line_inherit" model="ir.ui.view">
+            <field name="name">product.template.attribute.line.page.inherited</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='variants']//field[@name='attribute_line_ids']/tree/field[@name='value_ids']" position="after">
+                    <field name="default_id"/>
+                </xpath>
+                <xpath expr="//page[@name='general_information']//field[@name='list_price']" position="replace">
+                   <field name="list_price" widget='monetary' options="{'currency_field': 'currency_id', 'field_digits': True}"/>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="woo_product_page_inherited" model="ir.ui.view">
+            <field name="name">product.template.woo.page.inherited</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='categ_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//page[@name='general_information']" position="after">
+                    <page string="WooCommerce Info" name="wooinfo">
+                        <group>
+                            <group string="Woo Details">
+                                <field name="woo_id"/>
+                                <field name="tlc_ids" widget="many2many_tags"/>
+                                <field name="woo_categ_ids" widget="many2many_tags"/>
+                                <field name="sub_ids" widget="many2many_tags"/>
+                                <field name="brand_ids" widget="many2many_tags"/>
+                                <field name="veg"/>
+                            </group>
+                            <group string="Inventory">
+                                <field name="location_id"/>
+                                <br></br>
+                                <field name="instance_id"/>
+                                <field name="woo_variant_check" invisible="1"/>
+                                <field name="woo_publish"/>
+                                <field name="webhook"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="woo_product_prd_page_inherited" model="ir.ui.view">
+            <field name="name">product.product.woo.page.inherited</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='lst_price']" position="after">
+                    <field name="woo_price" invisible="1"/>
+                    <field name="woo_var_id"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="woo_product_prd_page_inherited" model="ir.ui.view">
+            <field name="name">product.product.woo.page.inherited</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_variant_easy_edit_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='lst_price']" position="replace">
+                    <field name="lst_price" widget='monetary'/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="woo_product_product_var_page_inherited" model="ir.ui.view">
+            <field name="name">product.product.variant.woo.page.inherited</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_variant_easy_edit_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='pricing']" position="inside">
+                    <field name="regular_price" widget='monetary'/>
+                    <field name="woo_var_id" invisible="1"/>
+                    <field name="webhook"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="woo_product_product_var_tree_inherited" model="ir.ui.view">
+            <field name="name">product.product.variant.woo.tree.inherited</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_product_tree_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='lst_price']" position="after">
+                    <field name="regular_price"/>
+                </xpath>
+            </field>
+        </record>
+
+
+        <menuitem id="woo_product_submenu" name="Products"
+                  parent="woo_commerce_menu"
+                  action="action_woo_product_menu"
+                  groups="base.group_user"/>
+
+    </data>
+</odoo>

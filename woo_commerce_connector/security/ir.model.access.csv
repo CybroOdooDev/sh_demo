@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_woo_commerce,access.woo.commerce,model_woo_commerce,base.group_user,1,1,1,1
+access_woo_attribute,access.woo.attribute,model_woo_attribute,base.group_user,1,1,1,1
+access_woocommerce_category,access.woocommerce.category,model_woocommerce_category,base.group_user,1,1,1,1
+access_woo_wizard,access.woo.wizard,model_woo_wizard,base.group_user,1,1,1,1
+access_product_subtype,access.product.subtype,model_product_subtype,base.group_user,1,1,1,1
+access_product_tlc,access.product.tlc,model_product_tlc,base.group_user,1,1,1,1
+access_product_brand,access.product.brand,model_product_brand,base.group_user,1,1,1,1
+access_woo_order_coupons,access.woo.order.coupons,model_woo_order_coupons,base.group_user,1,1,1,1
+

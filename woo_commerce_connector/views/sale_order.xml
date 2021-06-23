@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="action_woo_order_menu" model="ir.actions.act_window">
+            <field name="name">WooCommerce Orders</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('woo_id', '!=', False)]</field>
+            <field name="context">{'create': False, 'edit': True, 'delete': True}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_empty_folder">
+                    Woo-commerce Orders.
+                </p>
+            </field>
+        </record>
+
+        <record id="woo_order_page_inherited" model="ir.ui.view">
+            <field name="name">sale.order.woo.page.inherited</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='other_information']" position="before">
+                    <page string="WooCommerce Info" name="wooinfo">
+                        <group string="Primary Details">
+                            <field name="woo_id"/>
+                            <field name="woo_order_key"/>
+                            <field name="instance_id"/>
+                            <field name="woo_order_status"/>
+                            <field name="state_check"/>
+                        </group>
+                        <group string="Coupon Details">
+                            <field name="woo_coupon_ids">
+                                <tree>
+                                    <field name="woo_coupon_id"/>
+                                    <field name="coupon_code"/>
+                                    <field name="discount_amount"/>
+                                    <field name="tax_discount"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </page>
+                </xpath>
+                <xpath expr="//page[@name='other_information']" position="inside">
+                    <group string="Inventory">
+                        <field name="location_id"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+
+        <menuitem id="woo_order_submenu" name="Orders"
+                  parent="woo_commerce_menu"
+                  action="action_woo_order_menu"
+                  groups="base.group_user"/>
+    </data>
+</odoo>

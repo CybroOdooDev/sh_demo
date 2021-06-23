@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="woo_tax_page_inherited" model="ir.ui.view">
+            <field name="name">account.tax.woo.page.inherited</field>
+            <field name="model">account.tax</field>
+            <field name="inherit_id" ref="account.view_tax_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="inside">
+                    <page string="WooCommerce Info" name="wooinfo">
+                        <group string="Woo Details">
+                            <field name="woo_id"/>
+                            <field name="instance_id"/>
+                            <field name="tax_class"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

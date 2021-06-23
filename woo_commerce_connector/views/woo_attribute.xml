@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="action_woo_attribute_menu" model="ir.actions.act_window">
+            <field name="name">Attributes</field>
+            <field name="res_model">product.attribute</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('woo_id', '!=', False)]</field>
+            <field name="context">{'create': False, 'edit': True, 'delete': True}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_empty_folder">
+                    Woo-commerce Attributes.
+                </p>
+            </field>
+        </record>
+
+        <record id="woo_commerce_attribute_form_view" model="ir.ui.view">
+            <field name="name">product.attribute.form</field>
+            <field name="model">product.attribute</field>
+            <field name="inherit_id" ref="product.product_attribute_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook/page[@name='attribute_values']" position="after">
+                    <page string="WooCommerce Info" name="wooinfo">
+                        <group string="Woo Details">
+                            <field name="woo_id"/>
+                            <field name="instance_id"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+
+        <menuitem id="woo_attribute_submenu"
+                  name="Woocommerce Attributes"
+                  action="action_woo_attribute_menu"
+                  parent="product_menu"
+                  groups="base.group_user"/>
+
+    </data>
+</odoo>

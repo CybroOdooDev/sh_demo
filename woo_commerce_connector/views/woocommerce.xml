@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="woo_commerce_form_view" model="ir.ui.view">
+            <field name="name">woo.commerce.form</field>
+            <field name="model">woo.commerce</field>
+            <field name="arch" type="xml">
+                <form string="Instance" duplicate="0">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group string="Instance Details">
+                                <field name="active" widget="toggle_button"/>
+                                <field name="store_url"/>
+                                <field name="consumer_key" password="1"/>
+                                <field name="consumer_secret" password="1"/>
+                            </group>
+                            <group string="Currency Details">
+                                <field name="currency"/>
+                            </group>
+                            <group string="Inventory">
+                                <field name="location_id"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="woo_commerce_tree_view" model="ir.ui.view">
+            <field name="name">woo.commerce.tree</field>
+            <field name="model">woo.commerce</field>
+            <field name="arch" type="xml">
+                <tree string="Instances">
+                    <field name="name"/>
+                    <field name="store_url"/>
+                    <field name="active" widget="toggle_button"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="woo_overview_kanban" model="ir.ui.view">
+            <field name="name">woo.commerce.kanban</field>
+            <field name="model">woo.commerce</field>
+            <field name="arch" type="xml">
+                <kanban class="oe_background_grey o_kanban_dashboard o_emphasize_colors o_stock_kanban" create="0">
+                    <field name="name"/>
+                    <field name="color"/>
+                    <field name="store_url"/>
+                    <field name="consumer_key"/>
+                    <field name="consumer_secret"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="#{!selection_mode ? kanban_color(record.color.raw_value) : ''}"
+                                 name="woo_commerce">
+                                <div>
+                                    <div t-attf-class="o_kanban_card_header">
+                                        <div class="o_kanban_card_header_title">
+                                            <div class="o_primary" t-if="!selection_mode">
+                                                <a type="object" name="get_instance">
+                                                    <field name="name"/>
+                                                </a>
+                                            </div>
+                                            <div class="o_primary" t-if="selection_mode">
+                                                <field name="name"/>
+                                            </div>
+                                        </div>
+                                        <div class="o_kanban_manage_button_section" t-if="!selection_mode">
+                                            <a class="o_kanban_manage_toggle_button" href="#">
+                                                <i class="fa fa-ellipsis-v" role="img" aria-label="Manage"
+                                                   title="Manage"/>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="container o_kanban_card_content" t-if="!selection_mode">
+                                        <div class="row">
+                                            <div class="col-6 o_kanban_primary_left">
+                                                <button class="btn btn-primary" name="get_wizard" type="object">
+                                                    <span>Operation</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="container o_kanban_card_manage_pane dropdown-menu" role="menu">
+                                        <div t-if="widget.editable" class="o_kanban_card_manage_settings row">
+                                            <div class="col-8" role="menuitem" aria-haspopup="true">
+                                                <ul class="oe_kanban_colorpicker" data-field="color" role="menu"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="action_woo_commerce_menu" model="ir.actions.act_window">
+            <field name="name">WooCommerce</field>
+            <field name="res_model">woo.commerce</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_empty_folder">
+                    Create Woocomerce Records
+                </p>
+            </field>
+        </record>
+
+        <record id="action_woo_overview_menu" model="ir.actions.act_window">
+            <field name="name">Overview</field>
+            <field name="res_model">woo.commerce</field>
+            <field name="view_mode">kanban</field>
+            <field name="domain">[]</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_empty_folder">
+                    Create Woocomerce Records
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="woo_commerce_menu" name="WooCommerce"
+                  groups="base.group_user" web_icon="woo_commerce_connector,static/description/icon.png"/>
+        <menuitem id="config_menu"
+                  name="Configuration"
+                  parent="woo_commerce_menu"
+                  sequence="110"
+                  groups="base.group_user"/>
+        <menuitem id="woo_commerce_submenu" name="Instance"
+                  parent="config_menu"
+                  sequence="100"
+                  action="action_woo_commerce_menu"
+                  groups="base.group_user"/>
+        <menuitem id="woo_overview_submenu" name="Overview"
+                  parent="woo_commerce_menu"
+                  sequence="1"
+                  action="action_woo_overview_menu"
+                  groups="base.group_user"/>
+
+    </data>
+</odoo>
